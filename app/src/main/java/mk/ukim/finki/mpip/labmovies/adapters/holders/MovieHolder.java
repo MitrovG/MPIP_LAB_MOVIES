@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import mk.ukim.finki.mpip.labmovies.R;
+import mk.ukim.finki.mpip.labmovies.models.Movie;
 
 public class MovieHolder extends RecyclerView.ViewHolder {
 
@@ -19,6 +20,11 @@ public class MovieHolder extends RecyclerView.ViewHolder {
         imageView = itemView.findViewById(R.id.imgMovieCard);
         textViewTitle = itemView.findViewById(R.id.tvMovieTitleCard);
         textViewYear = itemView.findViewById(R.id.tvMovieYearCard);
+    }
+
+    public void bind(Movie movie) {
+        textViewTitle.setText(movie.getTitle());
+        textViewYear.setText(movie.getYear());
     }
 
     public ImageView getImageView() {
