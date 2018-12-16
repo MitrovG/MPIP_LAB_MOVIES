@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">LabMovies</string>
+    <string name="img_movie_card_content_description">IMDB Movie</string>
 </resources>
