@@ -80,7 +80,31 @@ public class MovieRepository {
         });
     }
 
+    public LiveData<Movie> getMovieById(String id) {
+        return movieDao.getMovieById(id);
+    }
+
     public LiveData<List<Movie>> getMovies() {
         return movies;
+    }
+
+    public void loadMovie(String id) {
+        Call<Movie> call = omdbApiService.getMovieDetails(Constants.OMDB_API_KEY, id);
+        call.enqueue(new Callback<Movie>() {
+            @Override
+            public void onResponse(Call<Movie> call, Response<Movie> response) {
+
+                if (response.isSuccessful()) {
+                    Movie movie = response.body();
+                    update(movie);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Movie> call, Throwable t) {
+                Toast.makeText(context, "Failure:(", Toast.LENGTH_LONG).show();
+                Log.i(TAG, "onFailure: " + t.getMessage());
+            }
+        });
     }
 }

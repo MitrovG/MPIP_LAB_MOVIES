@@ -23,6 +23,10 @@ public class MovieViewModel extends AndroidViewModel {
         movies = movieRepository.getMovies();
     }
 
+    public void loadMovie(String id) {
+        movieRepository.loadMovie(id);
+    }
+
     public void insertAll(List<Movie> movies) {
         movieRepository.insertAll(movies);
     }
@@ -42,5 +46,9 @@ public class MovieViewModel extends AndroidViewModel {
 
     public LiveData<List<Movie>> getMovies() {
         return movies;
+    }
+
+    public LiveData<Movie> getMovieById(String id) {
+        return movieRepository.getMovieById(id);
     }
 }

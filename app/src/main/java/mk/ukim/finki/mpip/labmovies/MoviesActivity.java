@@ -43,7 +43,7 @@ public class MoviesActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        movieAdapter = new MovieAdapter();
+        movieAdapter = new MovieAdapter(this);
         recyclerView.setAdapter(movieAdapter);
     }
 
@@ -52,9 +52,9 @@ public class MoviesActivity extends AppCompatActivity {
         movieViewModel.getMovies().observe(this, new Observer<List<Movie>>() {
             @Override
             public void onChanged(@Nullable List<Movie> movies) {
-                if(movies == null || movies.size() == 0) {
-                    movieViewModel.syncData("Matrix");
-                }
+//                if(movies == null || movies.size() == 0) {
+//                    movieViewModel.syncData("Matrix");
+//                }
                 movieAdapter.updateData(movies);
             }
         });
@@ -67,6 +67,6 @@ public class MoviesActivity extends AppCompatActivity {
         array[0] = "Terminator";
         array[1] = "Matrix";
         array[2] = "Pocahontas";
-        movieViewModel.syncData(array[0]);
+        movieViewModel.syncData(array[randNum]);
     }
 }

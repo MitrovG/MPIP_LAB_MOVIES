@@ -33,6 +33,7 @@
             app:layout_constraintEnd_toStartOf="@id/guidelineMovieView"
             android:layout_marginEnd="10dp"
             android:adjustViewBounds="true"
+            android:scaleType="fitXY"
             android:contentDescription="@string/img_movie_card_content_description"/>
 
         <TextView

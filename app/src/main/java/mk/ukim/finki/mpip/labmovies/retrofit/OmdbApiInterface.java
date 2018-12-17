@@ -14,8 +14,8 @@ public interface OmdbApiInterface {
     Call<MovieList> getMovieResults(@Query("apikey") String apikey,
                                     @Query("s") String movieTitle);
 
-    @GET
+    @GET(".")
     Call<Movie> getMovieDetails(@Query("apikey") String apikey,
-                                @Query("t") String title);
+                                @Query("i") String id);
 
 }
