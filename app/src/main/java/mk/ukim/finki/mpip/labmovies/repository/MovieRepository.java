@@ -67,6 +67,10 @@ public class MovieRepository {
 
                     Log.i(TAG, "onResponse: in the beggining in onResponse");
                     List<Movie> movies = response.body().getMovies();
+                    if (movies == null) {
+                        Toast.makeText(context, "No search results.", Toast.LENGTH_LONG).show();
+                        return;
+                    }
                     deleteAll();
                     insertAll(movies);
                     for (Movie movie : movies) {
