@@ -5,10 +5,12 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.CircularProgressDrawable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -26,6 +28,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private ImageView imageView;
     private TextView tvPlot;
     private MovieViewModel movieViewModel;
+    private android.support.v7.widget.Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
     public void initUI() {
         imageView = findViewById(R.id.imgMovieDetail);
         tvPlot = findViewById(R.id.tvMoviePlotDetail);
+        toolbar = findViewById(R.id.toolbarMovieDetails);
+        setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
     }
 
     public void handleIntent() {
@@ -51,7 +58,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     }
     public void initViewModel(String imdbId) {
         movieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
-        movieViewModel.loadMovie(imdbId);
+//        movieViewModel.loadMovie(imdbId);
         movieViewModel.getMovieById(imdbId).observe(this, new Observer<Movie>() {
             @Override
             public void onChanged(@Nullable Movie movie) {

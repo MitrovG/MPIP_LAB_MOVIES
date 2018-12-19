@@ -8,7 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Toast;
 
@@ -26,15 +30,23 @@ public class MoviesActivity extends AppCompatActivity {
     private MovieAdapter movieAdapter;
     private MovieViewModel movieViewModel;
     private static final String TAG = "MoviesActivity";
+    private Toolbar toolbar;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies);
+        initActionBar();
         initList();
         Log.i(TAG, "onCreate: after initList()");
         initViewModel();
         Log.i(TAG, "onCreate: after initViewModel()");
+    }
+
+    public void initActionBar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbarMovieActivity);
+        setSupportActionBar(toolbar);
     }
 
     public void initList() {
@@ -52,21 +64,34 @@ public class MoviesActivity extends AppCompatActivity {
         movieViewModel.getMovies().observe(this, new Observer<List<Movie>>() {
             @Override
             public void onChanged(@Nullable List<Movie> movies) {
-//                if(movies == null || movies.size() == 0) {
+                if(movies == null || movies.size() == 0) {
 //                    movieViewModel.syncData("Matrix");
-//                }
-                movieAdapter.updateData(movies);
+                }
+                else {
+                    movieAdapter.updateData(movies);
+                }
             }
         });
     }
 
-    public void callSyncing(View view) {
-        Random random = new Random();
-        int randNum = random.nextInt(3);
-        String[] array = new String[3];
-        array[0] = "Terminator";
-        array[1] = "Matrix";
-        array[2] = "Pocahontas";
-        movieViewModel.syncData(array[randNum]);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.main_activity_menu, menu);
+        searchView = (SearchView) menu.findItem(R.id.menuItemSearch).getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                movieViewModel.syncData(s.trim());
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 }

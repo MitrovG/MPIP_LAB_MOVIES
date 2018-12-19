@@ -69,6 +69,9 @@ public class MovieRepository {
                     List<Movie> movies = response.body().getMovies();
                     deleteAll();
                     insertAll(movies);
+                    for (Movie movie : movies) {
+                        loadMovie(movie.getImdbId());
+                    }
                     Log.i(TAG, "onResponse: in the end in on Response");
                 }
             }
